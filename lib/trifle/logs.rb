@@ -34,11 +34,13 @@ module Trifle
       ).perform
     end
 
-    def self.searcher(namespace, queries: [], config: nil)
+    def self.searcher(namespace, queries: [], config: nil, min_loc: nil, max_loc: nil)
       Trifle::Logs::Operations::Searcher.new(
         namespace: namespace,
         queries: queries,
-        config: config
+        config: config,
+        min_loc: min_loc,
+        max_loc: max_loc
       )
     end
   end

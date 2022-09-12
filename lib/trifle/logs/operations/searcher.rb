@@ -4,14 +4,14 @@ module Trifle
   module Logs
     module Operations
       class Searcher
-        attr_reader :namespace, :queries
+        attr_reader :namespace, :queries, :min_loc, :max_loc
 
         def initialize(**keywords)
           @namespace = keywords.fetch(:namespace)
           @queries = keywords.fetch(:queries)
           @config = keywords[:config]
-          @min_loc = nil
-          @max_loc = nil
+          @min_loc = keywords[:min_loc]
+          @max_loc = keywords[:max_loc]
         end
 
         def config
