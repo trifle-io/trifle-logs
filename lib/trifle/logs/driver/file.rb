@@ -45,7 +45,7 @@ module Trifle
         def search__in_file(files, file_loc, queries)
           file, _line, length = file_for(files, file_loc: file_loc)
 
-          min_line = [length - read_size, 0].max
+          min_line = [length - read_size, 1].max
           max_line = length
 
           Trifle::Logs::Result.new(
@@ -80,7 +80,7 @@ module Trifle
             file, line, _length = cfile, cline, clength # rubocop:disable Style/ParallelAssignment
           end
 
-          min_line = [line - read_size, 0].max
+          min_line = [line - read_size, 1].max
 
           Trifle::Logs::Result.new(
             read(file, min_line, line, queries),
@@ -109,7 +109,7 @@ module Trifle
           return [nil, nil, nil] if idx == files.length - 1 # next file doesnt exist
 
           file = files[idx + 1]
-          [file, 0, length_of(file)]
+          [file, 1, length_of(file)]
         end
 
         def file_for(files, file_loc: nil)
