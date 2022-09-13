@@ -5,8 +5,8 @@ module Trifle
     class Result
       attr_reader :min_loc, :max_loc
 
-      def initialize(lines, min_loc: nil, max_loc: nil)
-        @lines = lines || []
+      def initialize(lines = [], min_loc: nil, max_loc: nil)
+        @lines = lines
         @min_loc = min_loc
         @max_loc = max_loc
       end
