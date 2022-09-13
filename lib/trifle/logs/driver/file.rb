@@ -58,7 +58,7 @@ module Trifle
           file, line, length = file_for(files, file_loc: file_loc)
           if line == length
             cfile, cline, clength = next_file_for(files, file) if line == length
-            return Trifle::Logs::Result.new(nil, max_loc: "#{file}##{line}") if cfile.nil?
+            return Trifle::Logs::Result.new(max_loc: "#{file}##{line}") if cfile.nil?
 
             file, line, length = cfile, cline, clength # rubocop:disable Style/ParallelAssignment
           end
@@ -75,7 +75,7 @@ module Trifle
           file, line, _length = file_for(files, file_loc: file_loc)
           if line.zero?
             cfile, cline, clength = prev_file_for(files, file)
-            return Trifle::Logs::Result.new(nil, min_loc: "#{file}##{line}") if cfile.nil?
+            return Trifle::Logs::Result.new(min_loc: "#{file}##{line}") if cfile.nil?
 
             file, line, _length = cfile, cline, clength # rubocop:disable Style/ParallelAssignment
           end
