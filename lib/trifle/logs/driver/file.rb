@@ -73,7 +73,7 @@ module Trifle
 
         def search_prev_in_file(files, file_loc, queries) # rubocop:disable Metrics/MethodLength
           file, line, _length = file_for(files, file_loc: file_loc)
-          if line.zero?
+          if line == 1
             cfile, cline, clength = prev_file_for(files, file)
             return Trifle::Logs::Result.new(min_loc: "#{file}##{line}") if cfile.nil?
 
