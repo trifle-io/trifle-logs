@@ -16,9 +16,3 @@ module Trifle
     end
   end
 end
-
-# c = Trifle::Logs::Configuration.new.tap do |c|
-#   c.driver = Trifle::Logs::Driver::File.new(path: 'test')
-#   c.timestamp_formatter = Trifle::Logs::Formatter::Timestamp.new
-#   c.content_formatter = Trifle::Logs::Formatter::Content::Json.new
-# end
