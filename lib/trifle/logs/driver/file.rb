@@ -38,6 +38,7 @@ module Trifle
 
         def search(namespace:, queries:, file_loc: nil, direction: nil)
           files = files_for(namespace: namespace)
+          return Trifle::Logs::Result.new if files.count.zero?
 
           send("search_#{direction}_in_file", files, file_loc, queries)
         end
