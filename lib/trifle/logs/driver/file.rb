@@ -6,17 +6,17 @@ module Trifle
   module Logs
     module Driver
       class File
-        attr_accessor :path, :pattern, :read_size
+        attr_accessor :path, :suffix, :read_size
 
-        def initialize(path:, pattern: '%Y/%m_%d')
+        def initialize(path:, suffix: '%Y/%m/%d', read_size: 1000)
           @path = path
-          @pattern = pattern
+          @suffix = suffix
+          @read_size = read_size
           @files = {}
-          @read_size = 3 # 1000
         end
 
         def filename_for(namespace:)
-          "#{path}/#{namespace}/#{Time.now.strftime(pattern)}.log"
+          "#{path}/#{namespace}/#{Time.now.strftime(suffix)}.log"
         end
 
         def logfile_for(namespace:)
@@ -36,26 +36,26 @@ module Trifle
           true
         end
 
-        def search(namespace:, queries:, file_loc: nil, direction: nil)
+        def search(namespace:, pattern:, file_loc: nil, direction: nil)
           files = files_for(namespace: namespace)
           return Trifle::Logs::Result.new if files.count.zero?
 
-          send("search_#{direction}_in_file", files, file_loc, queries)
+          send("search_#{direction}_in_file", files, file_loc, pattern)
         end
 
-        def search__in_file(files, file_loc, queries)
+        def search__in_file(files, file_loc, pattern)
           file, _line, length = file_for(files, file_loc: file_loc)
 
           min_line = [length - read_size, 1].max
           max_line = length
 
           Trifle::Logs::Result.new(
-            read(file, min_line, max_line, queries),
+            read(file, min_line, max_line, pattern),
             min_loc: "#{file}##{min_line}", max_loc: "#{file}##{max_line}"
           )
         end
 
-        def search_next_in_file(files, file_loc, queries) # rubocop:disable Metrics/MethodLength
+        def search_next_in_file(files, file_loc, pattern) # rubocop:disable Metrics/MethodLength
           file, line, length = file_for(files, file_loc: file_loc)
           if line == length
             cfile, cline, clength = next_file_for(files, file) if line == length
@@ -67,12 +67,12 @@ module Trifle
           max_line = [line + read_size, length].min
 
           Trifle::Logs::Result.new(
-            read(file, line, max_line, queries),
+            read(file, line, max_line, pattern),
             max_loc: "#{file}##{max_line}"
           )
         end
 
-        def search_prev_in_file(files, file_loc, queries) # rubocop:disable Metrics/MethodLength
+        def search_prev_in_file(files, file_loc, pattern) # rubocop:disable Metrics/MethodLength
           file, line, _length = file_for(files, file_loc: file_loc)
           if line == 1
             cfile, cline, clength = prev_file_for(files, file)
@@ -84,15 +84,15 @@ module Trifle
           min_line = [line - read_size, 1].max
 
           Trifle::Logs::Result.new(
-            read(file, min_line, line, queries),
+            read(file, min_line, line, pattern),
             min_loc: "#{file}##{min_line}"
           )
         end
 
-        def read(file, from, to, queries)
+        def read(file, from, to, pattern)
           # sed -n '2,4p;5q' test/lolz/2022/09_06.log | rg '.*' --json
           # head -4 test/lolz/2022/09_06.log | tail +2 | rg '.*' --json
-          cmd = "sed -n '#{from},#{to}p;#{to + 1}q' #{file} | rg '#{queries.first || '.*'}' --json"
+          cmd = "sed -n '#{from},#{to}p;#{to + 1}q' #{file} | rg '#{pattern || '.*'}' --json"
           _stdin, stdout, _stderr = Open3.popen3(cmd)
           stdout.map { |l| JSON.parse(l) }
         end

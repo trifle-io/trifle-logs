@@ -4,11 +4,11 @@ module Trifle
   module Logs
     module Operations
       class Searcher
-        attr_reader :namespace, :queries, :min_loc, :max_loc
+        attr_reader :namespace, :pattern, :min_loc, :max_loc
 
         def initialize(**keywords)
           @namespace = keywords.fetch(:namespace)
-          @queries = keywords.fetch(:queries)
+          @pattern = keywords.fetch(:pattern)
           @config = keywords[:config]
           @min_loc = keywords[:min_loc]
           @max_loc = keywords[:max_loc]
@@ -20,7 +20,7 @@ module Trifle
 
         def perform
           result = config.driver.search(
-            namespace: namespace, queries: queries
+            namespace: namespace, pattern: pattern
           )
           @min_loc = result.min_loc
           @max_loc = result.max_loc
@@ -31,7 +31,7 @@ module Trifle
           return Trifle::Logs::Result.new if @min_loc.nil?
 
           result = config.driver.search(
-            namespace: namespace, queries: queries,
+            namespace: namespace, pattern: pattern,
             file_loc: @min_loc, direction: :prev
           )
 
@@ -43,7 +43,7 @@ module Trifle
           return Trifle::Logs::Result.new if @max_loc.nil?
 
           result = config.driver.search(
-            namespace: namespace, queries: queries,
+            namespace: namespace, pattern: pattern,
             file_loc: @max_loc, direction: :next
           )
 

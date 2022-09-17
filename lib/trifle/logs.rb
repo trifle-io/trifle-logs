@@ -25,19 +25,19 @@ module Trifle
       default
     end
 
-    def self.dump(namespace, payload, query: {}, config: nil)
+    def self.dump(namespace, payload, scope: {}, config: nil)
       Trifle::Logs::Operations::Dump.new(
         namespace: namespace,
         payload: payload,
-        query: query,
+        scope: scope,
         config: config
       ).perform
     end
 
-    def self.searcher(namespace, queries: [], config: nil, min_loc: nil, max_loc: nil)
+    def self.searcher(namespace, pattern: nil, config: nil, min_loc: nil, max_loc: nil)
       Trifle::Logs::Operations::Searcher.new(
         namespace: namespace,
-        queries: queries,
+        pattern: pattern,
         config: config,
         min_loc: min_loc,
         max_loc: max_loc

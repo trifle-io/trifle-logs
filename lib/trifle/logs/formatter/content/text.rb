@@ -5,9 +5,9 @@ module Trifle
     module Formatter
       module Content
         class Text
-          def format(query, message)
+          def format(scope, message)
             [
-              query.map { |pair| pair.join(':') }.join(';'),
+              scope.map { |pair| pair.join(':') }.join(';'),
               message
             ].join(' ')
           end

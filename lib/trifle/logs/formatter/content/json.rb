@@ -7,9 +7,9 @@ module Trifle
     module Formatter
       module Content
         class Json
-          def format(query, message)
+          def format(scope, message)
             {
-              query: query,
+              scope: scope,
               content: message
             }.to_json
           end
