@@ -26,7 +26,7 @@ module Trifle
 
         def perform
           config.driver.dump(
-            formatted, namespace: namespace, scope: scope
+            formatted, namespace: namespace
           )
         end
       end

@@ -14,8 +14,6 @@ Gem::Specification.new do |spec|
   spec.licenses = ['MIT']
   spec.required_ruby_version = Gem::Requirement.new('>= 2.6.0')
 
-  spec.metadata["allowed_push_host"] = "TODO: Set to your gem server 'https://example.com'"
-
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = 'https://github.com/trifle-io/trifle-logs'
   spec.metadata["changelog_uri"] = 'https://trifle.io/trifle-logs/changelog'
