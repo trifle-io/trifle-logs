@@ -8,32 +8,32 @@ module Trifle
       class File
         attr_accessor :path, :suffix, :read_size
 
-        def initialize(path:, suffix: '%Y/%m/%d', read_size: 1000)
+        def initialize(path:, suffix: '%Y/%m/%d', read_size: 100)
           @path = path
           @suffix = suffix
           @read_size = read_size
-          @files = {}
         end
 
         def filename_for(namespace:)
           "#{path}/#{namespace}/#{Time.now.strftime(suffix)}.log"
         end
 
-        def logfile_for(namespace:)
-          @files[namespace] = begin
-            filename = filename_for(namespace: namespace)
-            FileUtils.mkdir_p(::File.dirname(filename))
-            ::File.new(
-              filename_for(namespace: namespace), 'a', encoding: 'utf-8'
-            )
+        def locked_file(namespace:, &block)
+          filename = filename_for(namespace: namespace)
+          FileUtils.mkdir_p(::File.dirname(filename))
+          ::File.open(filename, 'a') do |file|
+            file.flock(::File::LOCK_EX)
+            block.call(file)
+          ensure
+            file.flock(::File::LOCK_UN)
           end
         end
 
         def dump(message, namespace:)
-          file = logfile_for(namespace: namespace)
-          file.write("#{message}\n")
-          file.flush
-          true
+          locked_file(namespace: namespace) do |file|
+            file.write("#{message}\n")
+          end
+          message
         end
 
         def search(namespace:, pattern:, file_loc: nil, direction: nil)

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "logs"
+require "trifle/logs"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
