@@ -10,7 +10,7 @@ module Trifle
           def format(scope, message)
             {
               scope: scope,
-              content: message
+              message: message
             }.to_json
           end
         end
