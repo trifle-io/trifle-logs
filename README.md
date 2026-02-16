@@ -41,17 +41,17 @@ result.data
 
 ## Features
 
-- **File-based storage** — Simple, reliable, no external dependencies
-- **Fast search** — Uses ripgrep for high-performance regex queries
-- **Flexible formatting** — JSON, text, and timestamp formatters
-- **Pagination** — Head/tail navigation through log files
-- **Structured logging** — Scope and metadata support
+- **File-based storage.** Simple, reliable, no external dependencies.
+- **Fast search.** Uses ripgrep for high-performance regex queries.
+- **Flexible formatting.** JSON, text, and timestamp formatters.
+- **Pagination.** Head/tail navigation through log files.
+- **Structured logging.** Scope and metadata support.
 
 ## Formatters
 
-- **JSON** — Structured output with timestamps and scope
-- **Text** — Plain text for human readability
-- **Timestamp** — Automatic timestamping on all entries
+- **JSON.** Structured output with timestamps and scope.
+- **Text.** Plain text for human readability.
+- **Timestamp.** Automatic timestamping on all entries.
 
 ## Documentation
 
@@ -61,7 +61,7 @@ Full guides and API reference at **[docs.trifle.io/trifle-logs](https://docs.tri
 
 | Component | What it does |
 |-----------|-------------|
-| **[Trifle App](https://trifle.io/product-app)** | Dashboards, alerts, scheduled reports, AI-powered chat. |
+| **[Trifle App](https://trifle.io/product/app)** | Dashboards, alerts, scheduled reports, AI-powered chat. |
 | **[Trifle::Stats](https://github.com/trifle-io/trifle-stats)** | Time-series metrics for Ruby (Postgres, Redis, MongoDB, MySQL, SQLite). |
 | **[Trifle CLI](https://github.com/trifle-io/trifle-cli)** | Terminal access to metrics. MCP server mode for AI agents. |
 | **[Trifle::Traces](https://github.com/trifle-io/trifle-traces)** | Structured execution tracing for background jobs. |
