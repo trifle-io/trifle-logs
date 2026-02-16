@@ -55,7 +55,7 @@ result.data
 
 ## Documentation
 
-Full guides and API reference at **[trifle.io/trifle-logs](https://trifle.io/trifle-logs)**
+Full guides and API reference at **[docs.trifle.io/trifle-logs](https://docs.trifle.io/trifle-logs)**
 
 ## Trifle Ecosystem
 
